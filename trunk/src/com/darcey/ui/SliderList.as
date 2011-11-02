@@ -148,7 +148,7 @@ package com.darcey.ui
 		{
 			var uiComponent:ColorChooser = (e.target) as ColorChooser;
 			var params:SliderListParamatersObject = componentsArray[uiComponent.name];
-			updateText(params.label + " " + params.uiComponent.value.toFixed(2),params.textField,10);
+			updateText(params.label,params.textField,10);
 			
 			params.objectToUpdate[params.objectParamaterToUpdate] = uiComponent.value;
 		}
