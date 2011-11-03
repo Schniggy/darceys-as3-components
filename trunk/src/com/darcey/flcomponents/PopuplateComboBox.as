@@ -1,5 +1,7 @@
 package com.darcey.flcomponents
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import fl.controls.ComboBox;
 	import fl.data.DataProvider;
 

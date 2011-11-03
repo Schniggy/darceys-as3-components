@@ -1,5 +1,7 @@
 package com.darcey.gfx
 {
+	// Author: Darcey.Lloyd@gmail.com
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;

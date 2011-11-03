@@ -1,5 +1,8 @@
 package com.darcey.utils
 {
+	// Author: Darcey.Lloyd@gmail.com
+	
+	// ---------------------------------------------------------------------------------------------------------------------------
 	import away3d.core.base.SubGeometry;
 	import away3d.entities.Mesh;
 	
@@ -11,6 +14,7 @@ package com.darcey.utils
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
+	// ---------------------------------------------------------------------------------------------------------------------------
 
 	// ---------------------------------------------------------------------------------------------------------------------------
 	public class DTools

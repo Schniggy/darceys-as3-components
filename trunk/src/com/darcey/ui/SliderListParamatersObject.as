@@ -1,5 +1,7 @@
 package com.darcey.ui
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import flash.text.TextField;
 
 	public class SliderListParamatersObject extends Object

@@ -1,5 +1,7 @@
 package com.darcey.gfx
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	// --------------------------------------------------------------------------------------------
 	import flash.display.GradientType;
 	import flash.display.Shape;

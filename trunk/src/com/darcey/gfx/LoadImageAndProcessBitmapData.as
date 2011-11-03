@@ -1,5 +1,7 @@
 package com.darcey.utils.graphics
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;

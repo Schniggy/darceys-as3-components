@@ -1,5 +1,7 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import flash.display.Stage;
 	import flash.events.MouseEvent;
 	
