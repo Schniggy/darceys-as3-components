@@ -1,5 +1,7 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import flash.display.LoaderInfo;
 
 	public class TraceFlashVars

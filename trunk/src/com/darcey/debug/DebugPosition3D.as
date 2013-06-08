@@ -1,7 +1,11 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
+	// ----------------------------------------------------------------------------------------------------
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
+	// ----------------------------------------------------------------------------------------------------
 	
 	// ------------------------------------------------------------------------------------------------------------
 	public class DebugPosition3D
@@ -18,28 +22,7 @@ package com.darcey.debug
 		private var msg:String = "";
 		// ------------------------------------------------------------------------------------------------------------
 		
-		
-		// ------------------------------------------------------------------------------------------------------------
-		public function help():void
-		{
-			msg = "";
-			msg += "#########################################################" + "\n";
-			msg += "DebugPosition3D(): Attached to: " + target.name + " (" + typeof(target) + ")\n";
-			msg += "DebugPosition3D(): Usage keys" + "\n";
-			msg += "DebugPosition3D(): Q + Rotation X" + "   \t   " + "A - Rotation X" + "\n";
-			msg += "DebugPosition3D(): W + Rotation Y" + "   \t   " + "S - Rotation Y" + "\n";
-			msg += "DebugPosition3D(): E + Rotation Z" + "   \t   " + "E - Rotation Z" + "\n";
-			msg += "DebugPosition3D(): Z - Width" + "   \t   " + "X + Width" + "\n";
-			msg += "DebugPosition3D(): C - Height" + "   \t   " + "v + Height" + "\n";
-			msg += "DebugPosition3D(): R + Movement step" + "   \t   " + "F - Movement step" + "\n";
-			msg += "DebugPosition3D(): Move using Arrow keys" + "\n";
-			msg += "DebugPosition3D(): H = Show this help message" + "\n";
-			msg += "#########################################################";
-			trace(msg);
-			addToDebugBox(msg);
-		}
-		// ------------------------------------------------------------------------------------------------------------
-		
+	
 		
 		// ------------------------------------------------------------------------------------------------------------
 		public function DebugPosition3D(
@@ -60,7 +43,7 @@ package com.darcey.debug
 			this.dissableTrace = dissableTrace;
 			this.db = db;
 			
-			help();
+		
 			
 			this.stage.addEventListener(KeyboardEvent.KEY_DOWN,handleKeyDown);
 		}
@@ -68,6 +51,7 @@ package com.darcey.debug
 		
 		
 		
+		private var code:Number = 0;
 		
 		// ------------------------------------------------------------------------------------------------------------
 		private function handleKeyDown(e:KeyboardEvent):void
@@ -100,6 +84,9 @@ package com.darcey.debug
 				return;
 			}
 			
+			code = e.keyCode;
+			//trace(e.keyCode);
+			
 			switch (e.keyCode){
 				
 				case 90: target.width -= nStep; traceout(); break; // dec width
@@ -126,12 +113,12 @@ package com.darcey.debug
 				case 37: target.x -= nStep; traceout(); break;
 				case 39: target.x += nStep; traceout(); break;
 				case 107: target.z += nStep; traceout(); break;
-				case 189: target.z -= nStep; traceout(); break;
+				case 109: target.z -= nStep; traceout(); break;
 				
 				case 82: nStep += 1; traceout(); break;
 				case 70: nStep -= 1; traceout(); break;
 				
-				case 72: help(); return; break;
+			
 				
 				default:
 					//msg = "Key press = " + e.keyCode;
@@ -165,7 +152,8 @@ package com.darcey.debug
 			
 			
 			msg = "";
-			msg += "" + target.name + ":\n";
+			msg += "" + target.name + ":\t";
+			msg += "code:" + code + ":\t";
 			
 			msg += "" + "x:" + target.x.toFixed(2);
 			msg += " " + "y:" + target.y.toFixed(2);

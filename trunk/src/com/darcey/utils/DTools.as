@@ -1,20 +1,86 @@
 package com.darcey.utils
 {
-	import away3d.core.base.SubGeometry;
-	import away3d.entities.Mesh;
+	// Author: Darcey.Lloyd@gmail.com
+	// Commented out Away3D functions for this project
+	
+	// ---------------------------------------------------------------------------------------------------------------------------
+	//import away3d.core.base.SubGeometry;
+	//import away3d.entities.Mesh;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.BlendMode;
+	import flash.display.DisplayObject;
+	import flash.display.Stage;
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
+	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
-
+	import flash.utils.Timer;
+	
+	// ---------------------------------------------------------------------------------------------------------------------------
+	
 	// ---------------------------------------------------------------------------------------------------------------------------
 	public class DTools
 	{
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public static function getValueFromURLString(source:String,paramater:String):String
+		{
+			var result:String = "";
+			
+			// Split into value pairs
+			var sourceSplit:Array = source.split("&");
+			//trace(sourceSplit);
+			
+			// Find array position with paramater in
+			var indexFound:Number = -1;
+			for (var i:uint = 0; i < sourceSplit.length; i++)
+			{
+				//trace(sourceSplit[i]);
+				if (isInString(sourceSplit[i],paramater))
+				{
+					indexFound = i;
+				}
+			}
+			
+			if (indexFound == -1){
+				return "0";
+			}
+			
+			var pairSplit:Array = sourceSplit[indexFound].split("=");
+			result = pairSplit[pairSplit.length-1];
+			
+			//trace(result);
+			
+			return result;
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public static function isInString(source:String,find:String):Boolean
+		{
+			if (source.indexOf(find) == -1)
+			{
+				return false;
+			}
+			return true;
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public static function replaceForwardSlashes(source:String,replacementString:String):String
+		{
+			var regEx:RegExp = /(\/)/g;
+			return source.replace( regEx,replacementString );
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
 		
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public static function trim(arg:String):String
@@ -93,7 +159,7 @@ package com.darcey.utils
 			return txt;
 		}
 		// ----------------------------------------------------------------------------------------------------
-
+		
 		
 		
 		
@@ -220,22 +286,78 @@ package com.darcey.utils
 		
 		
 		
+		// -------------------------------------------------------------------------------------------
+		public static function centerStageX(stageWidth:Number,obj:DisplayObject,offset:Number=0,setWidth:Number=0):void
+		{
+			if (setWidth == 0){
+				obj.x = ((stageWidth/2) - (obj.width/2)) + offset;
+			} else {
+				obj.x = ((stageWidth/2) - (setWidth/2)) + offset;
+			}
+		}
+		// -------------------------------------------------------------------------------------------
+		
+		
+		// -------------------------------------------------------------------------------------------
+		public static function centerStageY(stageHeight:Number,obj:DisplayObject,offset:Number=0,setHeight:Number=0):void
+		{
+			if (setHeight == 0){
+				obj.y = ((stageHeight/2) - (obj.height/2)) + offset;
+			} else {
+				obj.y = ((stageHeight/2) - (setHeight/2)) + offset;
+			}
+		}
+		// -------------------------------------------------------------------------------------------
+		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function isValidEmail(email:String):Boolean
+		{
+			var regExpPattern : RegExp = /^[0-9a-zA-Z][-._a-zA-Z0-9]*@([0-9a-zA-Z][-._0-9a-zA-Z]*\.)+[a-zA-Z]{2,4}$/;
+			
+			if( email.match(regExpPattern) == null ){
+				return false;
+			} else {
+				return true;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		public static function aspectRatioResizeNoCrop(displayObject:DisplayObject,targetW:Number,targetH:Number):void
+		{
+			trace("aspectRatioResizeNoCrop: displayObject: " + displayObject + "   mcw:" + displayObject.width + "   mch:" + displayObject.height);
+			
+			if (displayObject.width > displayObject.height){
+				//trace("SET BY WIDTH");
+				displayObject.height = targetH;
+				displayObject.scaleX = displayObject.scaleY;
+			} else {
+				//trace("SET BY HEIGHT");
+				displayObject.width = targetW;
+				displayObject.scaleY = displayObject.scaleX;
+			}
+		}
+		
 		
 		/*
 		incrementUV(plane, new Point(0.01, 0.01));
 		scaleUV(plane, new Point(0.99, 0.99));
-		*/
+		
 		
 		// -------------------------------------------------------------------------------------------
 		public static function incrementUV(m:Mesh, pos:Point):void
 		{
-			var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
-			for (var i:int = 0; i < v.length; i=i+2)
-			{
-				v[i] += pos.x;
-				v[i + 1] += pos.y;
-				SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
-			}
+		var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
+		for (var i:int = 0; i < v.length; i=i+2)
+		{
+		v[i] += pos.x;
+		v[i + 1] += pos.y;
+		SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
+		}
 		}
 		// -------------------------------------------------------------------------------------------
 		
@@ -243,17 +365,17 @@ package com.darcey.utils
 		// -------------------------------------------------------------------------------------------
 		public static function scaleUV(m:Mesh, pos:Point):void
 		{
-			var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
-			for (var i:int = 0; i < v.length; i=i+2)
-			{
-				v[i] += ( pos.x - 1) * 0.5;
-				v[i + 1] += (pos.y - 1) * 0.5;
-				
-				v[i] /= pos.x
-				v[i + 1] /= pos.y;
-				
-				SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
-			}
+		var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
+		for (var i:int = 0; i < v.length; i=i+2)
+		{
+		v[i] += ( pos.x - 1) * 0.5;
+		v[i + 1] += (pos.y - 1) * 0.5;
+		
+		v[i] /= pos.x
+		v[i + 1] /= pos.y;
+		
+		SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
+		}
 		}
 		// -------------------------------------------------------------------------------------------
 		
@@ -262,23 +384,23 @@ package com.darcey.utils
 		// -------------------------------------------------------------------------------------------
 		public static function rotateUV(m:Mesh, rotationDeg:Number, rotateAbout:Point):void
 		{
-			var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
-			var r:Number= rotationDeg*(Math.PI/180);
-			
-			
-			for (var i:int = 0; i < v.length; i=i+2)
-			{
-				v[i] -= rotateAbout.x;
-				v[i + 1] -= rotateAbout.y;
-				v[i] = v[i] * Math.cos(r) + v[i + 1] * -Math.sin(r);
-				v[i + 1] = v[i] * Math.sin(r) +v[i + 1] * Math.cos(r);
-				v[i] += rotateAbout.x;
-				v[i + 1] += rotateAbout.y;
-			}
-			SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
+		var v:Vector.<Number> = SubGeometry(m.geometry.subGeometries[0]).UVData;
+		var r:Number= rotationDeg*(Math.PI/180);
+		
+		
+		for (var i:int = 0; i < v.length; i=i+2)
+		{
+		v[i] -= rotateAbout.x;
+		v[i + 1] -= rotateAbout.y;
+		v[i] = v[i] * Math.cos(r) + v[i + 1] * -Math.sin(r);
+		v[i + 1] = v[i] * Math.sin(r) +v[i + 1] * Math.cos(r);
+		v[i] += rotateAbout.x;
+		v[i + 1] += rotateAbout.y;
+		}
+		SubGeometry(m.geometry.subGeometries[0]).updateUVData(v);
 		}
 		// -------------------------------------------------------------------------------------------
-		
+		*/
 		
 		
 		

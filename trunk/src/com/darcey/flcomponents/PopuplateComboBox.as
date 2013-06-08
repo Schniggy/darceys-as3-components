@@ -14,7 +14,7 @@ package com.darcey.flcomponents
 			
 			//dp.sortOn("label",Array.DESCENDING);
 			dp.sortOn("label");
-			
+			cb.useHandCursor = true;
 			cb.dataProvider = dp;
 			//cb.selectedIndex = 0;
 			//cb.prompt = " ";

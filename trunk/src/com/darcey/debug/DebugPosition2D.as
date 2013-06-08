@@ -1,14 +1,28 @@
 package com.darcey.debug
-{	
+{
+	// Author: Darcey.Lloyd@gmail.com
+	
+	// ----------------------------------------------------------------------------------------------------
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
+	// ----------------------------------------------------------------------------------------------------
 	
+	
+	// ----------------------------------------------------------------------------------------------------
 	public class DebugPosition2D
 	{
+	// ----------------------------------------------------------------------------------------------------
 		private var stage:Stage;
 		private var target:*;
 		private var debugBox:DebugBox;
 		
+		private var shiftKeyPressed:Boolean = false;
+		private var nStep:Number = 1;
+		private var msg:String;
+		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
 		public function DebugPosition2D(stage:Stage,target:*,debugBox:DebugBox=null)
 		{
 			this.stage = stage;
@@ -21,10 +35,10 @@ package com.darcey.debug
 			trace("DebugPosition2D(): Attached to [" + target + "] name: [" + target.name + "]");
 			addToDebugBox("DebugPosition2D(): Attached to [" + target + "] name: [" + target.name + "]");
 		}
+		// ----------------------------------------------------------------------------------------------------
 		
-		private var shiftKeyPressed:Boolean = false;
-		private var nStep:Number = 1;
 		
+		// ----------------------------------------------------------------------------------------------------
 		private function keyDownHandler( e:KeyboardEvent ):void
 		{
 			var keyCodeRecognised:Boolean = false;
@@ -115,10 +129,11 @@ package com.darcey.debug
 			}
 			
 		}
+		// ----------------------------------------------------------------------------------------------------
 		
-		private var msg:String;
 		
 		
+		// ----------------------------------------------------------------------------------------------------
 		private function keyUpHandler(e:KeyboardEvent):void
 		{
 			switch (e.keyCode)
@@ -128,14 +143,16 @@ package com.darcey.debug
 					break;
 			}
 		}
+		// ----------------------------------------------------------------------------------------------------
 		
 		
+		// ----------------------------------------------------------------------------------------------------
 		public function dispose():void
 		{
 			stage.removeEventListener( KeyboardEvent.KEY_DOWN, keyDownHandler );
 			stage.removeEventListener( KeyboardEvent.KEY_UP, keyUpHandler );
 		}
-		
+		// ----------------------------------------------------------------------------------------------------
 		
 		
 		
