@@ -238,11 +238,55 @@ package com.darcey.gfx
 			var alphas:Array = [nColor1Alpha, nColor2Alpha]; // transparancies
 			var ratios:Array = [a, b];
 			var spreadMethod:String = SpreadMethod.PAD;
-						
+			
 			var matr:Matrix = new Matrix();
 			matr.createGradientBox(nWidth, nHeight, (nAngle * Math.PI/180), 0, 0);
-
+			
 			var shapeGradient:Shape = new Shape();
+			shapeGradient.graphics.beginGradientFill(fillType, colors, alphas, ratios, matr, spreadMethod); 
+			shapeGradient.graphics.drawRoundRect(0, 0, nWidth,nHeight, cornerRadius,cornerRadius);
+			shapeGradient.graphics.endFill();	
+			
+			return shapeGradient;
+		}// --------------------------------------------------------------------------------------------
+		
+		
+		
+		// --------------------------------------------------------------------------------------------
+		public static function DrawGradientBoxWithOutline(
+			nColor1:Number = 0xFF0000,
+			nColor1Alpha:Number = 1,
+			nColor2:Number = 0xFFFFFF,
+			nColor2Alpha:Number = 0.5,
+			nWidth:Number=100,
+			nHeight:Number=100,
+			nAngle:Number=0,
+			nRatio1:Number=0,
+			nRatio2:Number=0,
+			lineThickness:Number=1,
+			lineColor:Number=0x550000
+		):Shape
+		{			
+			var a:Number = 30;
+			var b:Number = 255;
+			var c:Number = 255;
+			var d:Number = 0;
+			var e:Number = 0;
+			var cornerRadius:Number = 0;
+			
+			
+			
+			var fillType:String = GradientType.LINEAR;
+			var colors:Array = [nColor1, nColor2];
+			var alphas:Array = [nColor1Alpha, nColor2Alpha]; // transparancies
+			var ratios:Array = [a, b];
+			var spreadMethod:String = SpreadMethod.PAD;
+			
+			var matr:Matrix = new Matrix();
+			matr.createGradientBox(nWidth, nHeight, (nAngle * Math.PI/180), 0, 0);
+			
+			var shapeGradient:Shape = new Shape();
+			shapeGradient.graphics.lineStyle(lineThickness,lineColor,1,true);
 			shapeGradient.graphics.beginGradientFill(fillType, colors, alphas, ratios, matr, spreadMethod); 
 			shapeGradient.graphics.drawRoundRect(0, 0, nWidth,nHeight, cornerRadius,cornerRadius);
 			shapeGradient.graphics.endFill();	

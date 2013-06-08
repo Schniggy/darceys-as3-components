@@ -1,5 +1,7 @@
 package com.darcey.ui
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	// ------------------------------------------------------------------------------------------------------------------------------
 	import com.bit101.components.CheckBox;
 	import com.bit101.components.ColorChooser;

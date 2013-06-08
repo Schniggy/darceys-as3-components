@@ -1,49 +1,31 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	import flash.text.Font;
 
 	public class TraceAvailableFonts
 	{
-		private var debugBox:DebugBox;
-		private var msg:String;
+
+		private var msg:String = "";
 		
 		// ---------------------------------------------------------------------------------------------------------------------
-		public function TraceAvailableFonts(appName:String,debugBox:DebugBox=null)
+		public function TraceAvailableFonts(appName:String)
 		{
-			this.debugBox = debugBox;
-			
-			msg = "---------------------------------------------------------------------------";
-			trace(msg);
-			addToDebugBox(msg);
-			msg = "AVAILABLE FONTS to [" + appName + "]:";
-			trace(msg);
-			addToDebugBox(msg);
-			
-			addToDebugBox(msg);
+			msg += "---------------------------------------------------------------------------\n";
+			msg += "AVAILABLE FONTS to [" + appName + "]:\n";
+
 			var fonts:Array = Font.enumerateFonts().sortOn("fontName");
 			for (var i:int = 0; i < fonts.length; i++)
 			{
 				var font:Font = fonts[i];
-				msg = "\t" + i + ") fontName: [" + font.fontName + "]   fontStyle: [" + font.fontStyle + "]   fontType: [" + font.fontType + "]";
-				trace(msg);
-				addToDebugBox(msg);
+				msg += "\t" + i + ") fontName: [" + font.fontName + "]   fontStyle: [" + font.fontStyle + "]   fontType: [" + font.fontType + "]\n";
 			}
-			msg = "---------------------------------------------------------------------------";
+			msg += "---------------------------------------------------------------------------";
 			trace(msg);
-			addToDebugBox(msg);
 		}
 		// ---------------------------------------------------------------------------------------------------------------------
 		
-		
-		// ----------------------------------------------------------------------------------------
-		private function addToDebugBox(str:String):void
-		{
-			if (debugBox)
-			{
-				debugBox.add(str);				
-			}
-		}
-		// ----------------------------------------------------------------------------------------
 		
 	}
 }

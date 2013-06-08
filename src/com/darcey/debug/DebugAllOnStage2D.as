@@ -1,11 +1,15 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
+	// ------------------------------------------------------------------------------------------------------------
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.ui.Keyboard;
+	// ------------------------------------------------------------------------------------------------------------
 	
 	// ------------------------------------------------------------------------------------------------------------
 	public class DebugAllOnStage2D

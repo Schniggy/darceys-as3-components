@@ -1,5 +1,7 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	// ----------------------------------------------------------------------------------------------------
 	import com.bit101.components.TextArea;
 	
@@ -16,34 +18,81 @@ package com.darcey.debug
 
 	
 	// ----------------------------------------------------------------------------------------------------
-	public class DebugBox
+	public class DebugBox extends Sprite
 	{
-		private var stage:Stage;
-		private var container:Sprite;
+		// ---------------------------------------------------------------------------------------------------------------------------
+		private var debugBoxTitle:String = "";
+		private var debugBoxDefaultTitle:String = "DebugBox v1.3 - Click here to drag";
 		private var grabBar:Sprite;
+		private var closeButton:Sprite;
 		public var txtArea:TextArea;
 		private var ctrlKeyDown:Boolean = false;
 		private var shiftKeyDown:Boolean = false;
 		private var tf:TextFormat;
 		private var txt:TextField;
+		private var leftCtrlDown:Boolean = false;
+		private var shiftDown:Boolean = false;
+		// ---------------------------------------------------------------------------------------------------------------------------
 		
-		public function DebugBox(stage:Stage,container:Sprite,w:Number = 300,h:Number = 200,visibleByDefault:Boolean=true)
+		
+		// Singleton -----------------------------------------------------------------------------------------------------------------
+		public static var Singleton:DebugBox;
+		public static function getInstance():DebugBox { if ( Singleton == null ){ Singleton = new DebugBox(); } return Singleton;}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public function DebugBox()
 		{
-			this.stage = stage;
-			this.container = container;
+			this.addEventListener(Event.ADDED_TO_STAGE,addedToStageHandler);
+			this.addEventListener(Event.REMOVED_FROM_STAGE,removedFromStageHandler);
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public function addedToStageHandler(e:Event):void
+		{
+			//trace("DebugBox: added to stage");
+			
+			grabBar.useHandCursor = true;
+			grabBar.buttonMode = true;
+			grabBar.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
+			grabBar.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
+			grabBar.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler,false,0,true);
+			stage.addEventListener(Event.MOUSE_LEAVE,mouseStageLeaveHandler,false,0,true);
+			
+			// Listen for key presses to show debug box
+			stage.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
+			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public function removedFromStageHandler(e:Event):void
+		{
+			//trace("DebugBox: removed from stage");
+		}
+		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		
+		
+		// ---------------------------------------------------------------------------------------------------------------------------
+		public function init(w:Number = 300,h:Number = 200,visibleByDefault:Boolean=true,debugBoxTitle:String=""):void
+		{
+			// Ini pos
+			this.x = 10;
+			this.y = 10;
+			this.debugBoxTitle = debugBoxTitle;
 			
 			// Top bar
 			grabBar = new Sprite();
 			grabBar.graphics.beginFill(0x333333,1);
 			grabBar.graphics.drawRect(0,0,w,20);
 			grabBar.graphics.endFill();
-			container.addChild(grabBar);
 			grabBar.buttonMode = true;
 			grabBar.useHandCursor = true;
-			grabBar.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
-			grabBar.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
-			grabBar.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler);
-			stage.addEventListener(Event.MOUSE_LEAVE,mouseStageLeaveHandler);
+			this.addChild(grabBar);
 			
 			// Top bar title
 			tf = new TextFormat();
@@ -57,11 +106,15 @@ package com.darcey.debug
 			txt.height = h - 2;
 			txt.antiAliasType = AntiAliasType.ADVANCED;
 			txt.selectable = false;
-			txt.text = "DebugBox v1 - Click here to drag";
+			if (debugBoxTitle == ""){
+				txt.text = debugBoxDefaultTitle;
+			} else {
+				txt.text = debugBoxTitle;
+			}
 			txt.defaultTextFormat = tf;
 			txt.setTextFormat(tf);
 			txt.mouseEnabled = false;
-			container.addChild(txt);
+			this.addChild(txt);
 			
 			
 			// Debug text box
@@ -70,17 +123,38 @@ package com.darcey.debug
 			txtArea.editable = false;
 			txtArea.width = w;
 			txtArea.height = h;
-			container.addChild(txtArea);
+			this.addChild(txtArea);
+			
+			// Close button
+			closeButton = new Sprite();
+			closeButton.graphics.beginFill(0x666666,1);
+			closeButton.graphics.drawRect(0,0,20,20);
+			closeButton.graphics.endFill();
+			closeButton.graphics.lineStyle(2,0xFFFFFF,1);
+			closeButton.graphics.moveTo(5,5);
+			closeButton.graphics.lineTo(15,15);
+			closeButton.graphics.moveTo(15,5);
+			closeButton.graphics.lineTo(5,15);
+			closeButton.x = w - closeButton.width;
+			closeButton.buttonMode = true;
+			closeButton.mouseEnabled = true;
+			closeButton.useHandCursor = true;
+			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
+			addChild(closeButton);
 			
 			// Show help
-			help();
+			//help();
 			
 			// Handle visibility
-			container.visible = visibleByDefault;
-			
-			// Listen for key presses to show debug box
-			stage.addEventListener(KeyboardEvent.KEY_DOWN,keyDownHandler);
-			stage.addEventListener(KeyboardEvent.KEY_UP,keyUpHandler);
+			this.visible = visibleByDefault;
+		}
+		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
+		protected function closeButtonClickHandler(event:MouseEvent):void
+		{
+			this.hide();
 		}
 		// ----------------------------------------------------------------------------------------------------
 		
@@ -112,33 +186,35 @@ package com.darcey.debug
 		// ----------------------------------------------------------------------------------------------------
 		private function mouseDownHandler(e:MouseEvent):void
 		{
-			container.startDrag();
+			this.startDrag();
 		}
 		// ----------------------------------------------------------------------------------------------------
 		
 		// ----------------------------------------------------------------------------------------------------
 		private function mouseUpHandler(e:MouseEvent):void
 		{
-			container.stopDrag();
+			this.stopDrag();
 		}
 		// ----------------------------------------------------------------------------------------------------
+		
+		
+		
+		
 		
 		
 		
 		// ----------------------------------------------------------------------------------------------------
 		private function keyDownHandler(e:KeyboardEvent):void
 		{
-			if (e.keyCode == 17)
+			switch (e.keyCode)
 			{
-				ctrlKeyDown = true;
-			}
-			
-			if (e.keyCode == 16)
-			{
-				shiftKeyDown = true;
+				case 17: this.leftCtrlDown = true; return; break;
+				case 16: this.shiftDown = true; return; break;
 			}
 		}
 		// ----------------------------------------------------------------------------------------------------
+		
+		
 		
 		
 		// ----------------------------------------------------------------------------------------------------
@@ -146,59 +222,75 @@ package com.darcey.debug
 		{
 			//trace(e.keyCode);
 			
-			// Handle CTRL being pressed
-			if (e.keyCode == 17)
+			switch (e.keyCode)
 			{
-				ctrlKeyDown = false;
+				case 17: this.leftCtrlDown = false; return; break;
+				case 16: this.shiftDown = false; return; break;
+				case 82: resetPosition(); return; break; // R
+				case 68: toggleVisibility(); return; break; // D
+				case 67: userClear(); return; break; // C
+				case 72: help(); return; break; // H
 			}
-			
-			// Handle shift key
-			if (e.keyCode == 16)
+		}
+		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
+		public function toggleVisibility():void
+		{
+			if (this.leftCtrlDown && this.shiftDown)
 			{
-				shiftKeyDown = false;
-			}
-			
-			
-			// Toggle visibility using CTRL & D key
-			if (ctrlKeyDown && e.keyCode == 68)
-			{
-				if (container.visible)
+				if (this.visible)
 				{
-					container.visible = false;
+					hide();
 				} else {
-					container.visible = true;
+					show();
 				}
 			}
-			
-			
-			
-			// Reset position with CTRL & R key
-			if (ctrlKeyDown && e.keyCode == 82)
+		}
+		// ----------------------------------------------------------------------------------------------------
+
+		// ----------------------------------------------------------------------------------------------------
+		public function resetPosition():void
+		{
+			if (this.leftCtrlDown && this.shiftDown)
 			{
-				container.visible = true;
-				container.stopDrag();
-				container.x = 10;
-				container.y = 10;
-				trace("DebugBox(): Position reset");
+				this.visible = true;
+				this.stopDrag();
+				this.x = 10;
+				this.y = 10;
 			}
-			
-			
-			
-			// Show help with CTRL & H key
-			if (ctrlKeyDown && e.keyCode == 72)
-			{
-				help();
-			}
-			
-			
-			
-			// Clear with SHIFT and C
-			if (shiftKeyDown && e.keyCode == 67)
+		}
+		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
+		public function userClear():void
+		{
+			if (this.leftCtrlDown && this.shiftDown)
 			{
 				this.txtArea.text = "";
 			}
 		}
 		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
+		public function show():void
+		{
+			this.visible = true;
+		}
+		// ----------------------------------------------------------------------------------------------------
+		
+		
+		// ----------------------------------------------------------------------------------------------------
+		public function hide():void
+		{
+			this.visible = false;
+		}
+		// ----------------------------------------------------------------------------------------------------
+		
+		
 		
 		
 		
@@ -207,14 +299,13 @@ package com.darcey.debug
 		public function help():void
 		{
 			var msg:String = "";
-			
-			
+
 			msg = "#########################################################" + "\n";
 			msg += "DebugBox(): Usage:" + "\n";
-			msg += "\t" + "Press CTRL & D to toggle visibility" + "\n";
-			msg += "\t" + "Press CTRL & R to reset position" + "\n";
-			msg += "\t" + "Press SHIFT & C to clear text" + "\n";
-			msg += "\t" + "Press CTRL & H to for help" + "\n";
+			msg += "\t" + "Press CTRL SHIFT D to toggle visibility" + "\n";
+			msg += "\t" + "Press CTRL SHIFT R to reset position" + "\n";
+			msg += "\t" + "Press CTRL SHIFT C to clear text" + "\n";
+			msg += "\t" + "Press CTRL SHIFT H to for help" + "\n";
 			msg += "#########################################################";
 			add(msg);
 			trace(msg);

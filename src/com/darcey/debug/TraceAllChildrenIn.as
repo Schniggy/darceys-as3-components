@@ -1,5 +1,7 @@
 package com.darcey.debug
 {
+	// Author: Darcey.Lloyd@gmail.com
+
 	public class TraceAllChildrenIn
 	{
 		public function TraceAllChildrenIn(target:*)
