@@ -33,8 +33,17 @@ package com.darcey.utils
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function start():void
+		{
+			timer.start();
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function timerEventHandler():void
 		{
+			timer.stop();
 			timer.removeEventListener(TimerEvent.TIMER,timerEventHandler);
 			timer = null;
 			

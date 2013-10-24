@@ -12,6 +12,7 @@ package com.darcey.text
 	{
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public var font:String = "Trebuchet MS";
+		public var embedFonts:Boolean = true;
 		public var label:String = "UNDEFINED";
 		public var size:Number = 12;
 		public var color:Number = 0x000000;

@@ -18,6 +18,7 @@ package com.darcey.debug
 		
 		private var shiftKeyPressed:Boolean = false;
 		private var nStep:Number = 1;
+		private var scaleStep:Number = 0.01;
 		private var msg:String;
 		// ----------------------------------------------------------------------------------------------------
 		
@@ -49,6 +50,10 @@ package com.darcey.debug
 			
 			switch (e.keyCode)
 			{
+				case 72: // h
+					traceHelp();
+					break;
+				
 				case 38: // up
 					target.y -= nStep;
 					keyCodeRecognised = true;
@@ -75,18 +80,20 @@ package com.darcey.debug
 					keyCodeRecognised = true;
 					break;
 				
-				case 187: // +
-					nStep++;
-					keyCodeRecognised = true;
-					break;
-				
 				case 109: // keypad -
 					nStep--;
 					keyCodeRecognised = true;
 					break;
 				
+				
+				case 187: // +
+					target.alpha += 0.1;
+					nStep++;
+					keyCodeRecognised = true;
+					break;
+				
 				case 189: // -
-					nStep--;
+					target.alpha -= 0.1;
 					keyCodeRecognised = true;
 					break;
 				
@@ -110,10 +117,35 @@ package com.darcey.debug
 					target.height -= 1;
 					keyCodeRecognised = true;
 					break;
+				
+				
+				case 87: // w
+					target.scaleX = target.scaleY += scaleStep;
+					keyCodeRecognised = true;
+					break;
+				
+				case 83: // s
+					target.scaleX = target.scaleY -= scaleStep;
+					keyCodeRecognised = true;
+					break;
+				
+				case 65: // a
+					target.scaleX -= scaleStep;
+					keyCodeRecognised = true;
+					break;
+				
+				case 68: // d
+					target.scaleX += scaleStep;
+					keyCodeRecognised = true;
+					break;
 			}
 			
 			if (keyCodeRecognised){
-				msg = "DEBUG nStep:[" + nStep + "] target:["+target+"]   x:" + target.x + "   y:" + target.y + "   w:" + target.width + "   h:" + target.height;
+				msg = "DebugPosition2D [" + nStep + "]: ";
+				msg += "[ x:" + target.x.toFixed(1) + "   y:" + target.y.toFixed(1) + " ]\t";
+				msg += "[ scale:" + target.scaleX.toFixed(2) + " ]\t";
+				msg += "[ width:" + target.width.toFixed(1) + "   height:" + target.height.toFixed(1) + " ]\t";
+				msg += "[ alpha:" + target.alpha.toFixed(1) + "]";
 				trace(msg);
 				addToDebugBox(msg);
 				if (!target.visible)
@@ -123,7 +155,7 @@ package com.darcey.debug
 					addToDebugBox(msg);
 				}
 			} else {
-				msg = "DebugPosition2D(): key code not recognised keycode = " + e.keyCode;
+				msg = "##### DebugPosition2D(): key code not recognised keycode = " + e.keyCode;
 				trace(msg);
 				addToDebugBox(msg);
 			}
@@ -131,6 +163,24 @@ package com.darcey.debug
 		}
 		// ----------------------------------------------------------------------------------------------------
 		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		private function traceHelp():void
+		{
+			trace("#################################################################");
+			trace("DebugPosition2D() usage:");
+			trace("#################################################################");
+			trace("help = h");
+			trace("move x,y = arrow keys");
+			trace("move step +1 = keypad +");
+			trace("move step -1 = keypad -");
+			trace("alpha +1 = +     alpha -1 = -");
+			trace("width +1 = z     width -1 = x");
+			trace("height +1 = c     height -1 = v");
+			trace("scale +1 = w     scale -1 = s");
+			trace("#################################################################");
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		// ----------------------------------------------------------------------------------------------------
