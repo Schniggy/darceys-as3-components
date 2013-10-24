@@ -19,11 +19,17 @@ package com.darcey.text
 		public var align:String = "left"; // left || right || center
 		public var border:Boolean = false;
 		public var borderColor:Number = 0x000000;
-		public var leading:Number = 0;
+		public var leading:Number = 1;
 		public var bold:Boolean = false;
 		public var multiLine:Boolean = false;
 		public var wordWrap:Boolean = false;
 		public var selectable:Boolean = false;
+		public var underline:Boolean = false;
+		
+		public var background:Boolean = false;
+		public var backgroundColor:Number = 0xFFFFFF;
+		
+		public var letterSpacing:Number = 0;
 		
 		
 		public var width:Number = -1;
@@ -69,16 +75,19 @@ package com.darcey.text
 			if (getValue(parseInt(xmlData.@width))){ this.width = parseInt(xmlData.@width); }
 			if (getValue(parseInt(xmlData.@height))){ this.height = parseInt(xmlData.@height); }
 			if (getValue(parseInt(xmlData.@borderColor))){ this.borderColor = parseInt(xmlData.@borderColor); }
+			if (getValue(parseInt(xmlData.@backgroundColor))){ this.borderColor = parseInt(xmlData.@backgroundColor); }
 			
 			
 			
 			// Booleans
 			if (getValue(parseInt(xmlData.@embedFonts))){ this.embedFonts = DTools.getBooleanFromNumber(parseInt(xmlData.@embedFonts)) }
-			if (getValue(parseInt(xmlData.@border))){ this.border = DTools.getBooleanFromNumber(parseInt(xmlData.@border)) }
 			if (getValue(parseInt(xmlData.@bold))){ this.bold = DTools.getBooleanFromNumber(parseInt(xmlData.@bold)) }
 			if (getValue(parseInt(xmlData.@multiLine))){ this.multiLine = DTools.getBooleanFromNumber(parseInt(xmlData.@multiLine)) }
 			if (getValue(parseInt(xmlData.@wordWrap))){ this.wordWrap = DTools.getBooleanFromNumber(parseInt(xmlData.@wordWrap)) }
 			if (getValue(parseInt(xmlData.@selectable))){ this.selectable = DTools.getBooleanFromNumber(parseInt(xmlData.@selectable)) }
+			if (getValue(parseInt(xmlData.@border))){ this.border = DTools.getBooleanFromNumber(parseInt(xmlData.@border)) }
+			if (getValue(parseInt(xmlData.@background))){ this.selectable = DTools.getBooleanFromNumber(parseInt(xmlData.@background)) }
+			if (getValue(parseInt(xmlData.@underline))){ this.underline = DTools.getBooleanFromNumber(parseInt(xmlData.@underline)) }
 			
 			
 			// Node label

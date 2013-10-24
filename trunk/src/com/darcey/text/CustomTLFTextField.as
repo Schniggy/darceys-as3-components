@@ -3,6 +3,7 @@ package com.darcey.text
 	// -------------------------------------------------------------------------------------------	
 	import fl.text.TLFTextField;
 	
+	import flash.display.Sprite;
 	import flash.text.AntiAliasType;
 	import flash.text.TextFormat;
 
@@ -28,6 +29,8 @@ package com.darcey.text
 			tf = new TextFormat();
 			this.cVO = customTextFieldVO;
 			applySettings();
+			
+			this.cacheAsBitmap = true;
 		}
 		// -------------------------------------------------------------------------------------------
 		

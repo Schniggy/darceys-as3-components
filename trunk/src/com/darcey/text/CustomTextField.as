@@ -38,18 +38,25 @@ package com.darcey.text
 			tf.color = cVO.color;
 			tf.align = cVO.align;
 			tf.bold = cVO.bold;
-			tf.leading = cVO.leading
+			tf.leading = cVO.leading;
+			tf.letterSpacing = cVO.letterSpacing;
+			tf.underline = cVO.underline;
 			
 			this.embedFonts = cVO.embedFonts;
 			
 			this.multiline = cVO.multiLine;
 			this.wordWrap = cVO.wordWrap;
+			
 			this.selectable = cVO.selectable;
+			if (this.selectable){
+				this.mouseEnabled = true;
+			} else {
+				this.mouseEnabled = false;
+			}
+			
 			this.antiAliasType = AntiAliasType.ADVANCED;
 			this.autoSize = cVO.autoSize;
 						
-			this.border = cVO.border;
-			this.borderColor = cVO.borderColor;
 			
 			
 			if (cVO.width > -1){
@@ -68,6 +75,13 @@ package com.darcey.text
 			}
 			this.defaultTextFormat = tf;
 			this.setTextFormat(tf);
+			
+			//trace("cVOLabel = " + cVO.label + "   cVO.border = " + cVO.border + "   cVO.borderColor = " + cVO.borderColor);
+			
+			this.border = cVO.border;
+			this.borderColor = cVO.borderColor;
+			this.background = cVO.background;
+			this.backgroundColor = cVO.backgroundColor;
 		}
 		// -------------------------------------------------------------------------------------------
 		

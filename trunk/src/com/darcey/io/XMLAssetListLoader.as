@@ -159,7 +159,7 @@ package com.darcey.io
 					
 					case "xml":
 						t.ttrace("XMLAssetListLoader: added xml " + file+appendToFileString);
-						loader.append( new XMLLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
+						loader.append( new com.greensock.loading.XMLLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
 					case "css":

@@ -104,8 +104,8 @@ package com.darcey.io
 			
 			loader = new Loader();
 			urlRequest = new URLRequest(url);
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, intoSpriteImageLoadedHandler);
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, intoMovieClipImageLoadedHandler,false,0,true);
+			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, ioErrorEventHandler);
 			loader.load(urlRequest);
 		}
 		// ---------------------------------------------------------------------------------------------------------------------------

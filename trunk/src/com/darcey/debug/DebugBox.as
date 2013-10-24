@@ -3,8 +3,6 @@ package com.darcey.debug
 	// Author: Darcey.Lloyd@gmail.com
 
 	// ----------------------------------------------------------------------------------------------------
-	import com.bit101.components.TextArea;
-	
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
@@ -22,13 +20,14 @@ package com.darcey.debug
 	{
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private var debugBoxTitle:String = "";
-		private var debugBoxDefaultTitle:String = "DebugBox v1.3 - Click here to drag";
+		private var debugBoxDefaultTitle:String = "Darcey@AllForTheCode.co.uk - DebugBox v1.4 - Click here to drag";
 		private var grabBar:Sprite;
 		private var closeButton:Sprite;
-		public var txtArea:TextArea;
+		public var txtArea:TextField;
 		private var ctrlKeyDown:Boolean = false;
 		private var shiftKeyDown:Boolean = false;
-		private var tf:TextFormat;
+		private var tf1:TextFormat;
+		private var tf2:TextFormat;
 		private var txt:TextField;
 		private var leftCtrlDown:Boolean = false;
 		private var shiftDown:Boolean = false;
@@ -58,8 +57,8 @@ package com.darcey.debug
 			grabBar.useHandCursor = true;
 			grabBar.buttonMode = true;
 			grabBar.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler,false,0,true);
-			grabBar.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
-			grabBar.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler,false,0,true);
+			stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler,false,0,true);
+			//stage.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler,false,0,true);
 			stage.addEventListener(Event.MOUSE_LEAVE,mouseStageLeaveHandler,false,0,true);
 			
 			// Listen for key presses to show debug box
@@ -85,45 +84,21 @@ package com.darcey.debug
 			this.y = 10;
 			this.debugBoxTitle = debugBoxTitle;
 			
+			// DrawBg to full box
+			this.graphics.beginFill(0x000033,0.6);
+			this.graphics.drawRect(0,0,w,h);
+			this.graphics.endFill();
+			
 			// Top bar
 			grabBar = new Sprite();
-			grabBar.graphics.beginFill(0x333333,1);
+			grabBar.graphics.beginFill(0x000000,1);
 			grabBar.graphics.drawRect(0,0,w,20);
 			grabBar.graphics.endFill();
 			grabBar.buttonMode = true;
 			grabBar.useHandCursor = true;
 			this.addChild(grabBar);
 			
-			// Top bar title
-			tf = new TextFormat();
-			tf.size = 11;
-			tf.color = 0xFFFFFF;
-			//tf.font = "PF Ronda Seven";
 			
-			txt = new TextField();
-			txt.embedFonts = false;
-			txt.width = w - 5;
-			txt.height = h - 2;
-			txt.antiAliasType = AntiAliasType.ADVANCED;
-			txt.selectable = false;
-			if (debugBoxTitle == ""){
-				txt.text = debugBoxDefaultTitle;
-			} else {
-				txt.text = debugBoxTitle;
-			}
-			txt.defaultTextFormat = tf;
-			txt.setTextFormat(tf);
-			txt.mouseEnabled = false;
-			this.addChild(txt);
-			
-			
-			// Debug text box
-			txtArea = new TextArea();
-			txtArea.y = grabBar.y + grabBar.height;
-			txtArea.editable = false;
-			txtArea.width = w;
-			txtArea.height = h;
-			this.addChild(txtArea);
 			
 			// Close button
 			closeButton = new Sprite();
@@ -141,6 +116,55 @@ package com.darcey.debug
 			closeButton.useHandCursor = true;
 			closeButton.addEventListener(MouseEvent.CLICK,closeButtonClickHandler);
 			addChild(closeButton);
+			
+			
+			
+			// Top bar title
+			tf1 = new TextFormat();
+			tf1.size = 13;
+			tf1.color = 0xFFFFFF;
+			//tf.font = "PF Ronda Seven";
+			//tf.font = "system";
+			
+			txt = new TextField();
+			txt.embedFonts = false;
+			txt.border = false;
+			txt.borderColor = 0xFF0000;
+			txt.multiline = false;
+			txt.background = false;
+			txt.width = w - closeButton.width;
+			txt.height = 20.5;
+			txt.antiAliasType = AntiAliasType.ADVANCED;
+			txt.selectable = false;
+			if (debugBoxTitle == ""){
+				txt.text = debugBoxDefaultTitle;
+			} else {
+				txt.text = debugBoxTitle;
+			}
+			txt.defaultTextFormat = tf1;
+			txt.setTextFormat(tf1);
+			txt.mouseEnabled = false;
+			txt.y = 0.5;
+			this.addChild(txt);
+			
+			
+			// Debug text box
+			tf2 = new TextFormat();
+			tf2.size = 11;
+			tf2.color = 0xFFFFFF;
+			
+			txtArea = new TextField();
+			txtArea.background = false;
+			txtArea.border = true;
+			txtArea.borderColor = 0x000000;
+			txtArea.y = grabBar.y + grabBar.height;
+			txtArea.width = w - 1;
+			txtArea.height = h - txt.height;
+			txtArea.defaultTextFormat = tf2;
+			txtArea.setTextFormat(tf2);
+			this.addChild(txtArea);
+			
+			
 			
 			// Show help
 			//help();
@@ -162,7 +186,8 @@ package com.darcey.debug
 		// ----------------------------------------------------------------------------------------------------
 		public function add(str:String):void
 		{
-			txtArea.text += str + "\n";
+			//txtArea.text += str + "\n";
+			txtArea.appendText(str + "\n");
 		}
 		// ----------------------------------------------------------------------------------------------------
 		
