@@ -23,7 +23,8 @@ package com.darcey.debug
 						sID = target.getChildAt(i).id;
 					} catch (e:Error) { sID = ""; }
 					
-					trace("\t" + "childAt("+i+"): name = " + sName + "\t\t" + target.getChildAt(i) + "\t" + "\t\t" + "id = " + sID);
+					trace("\t" + "childAt("+i+"): name = " + sName + "\t\t" + target.getChildAt(i));
+					//trace("\t" + "childAt("+i+"): name = " + sName + "\t\t" + target.getChildAt(i) + "\t" + "\t\t" + "id = " + sID);
 				}
 			} catch (e:Error) {
 				trace("TraceAllChildrenIn(target:*): Target ["+target+"] has no children!");

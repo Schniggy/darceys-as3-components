@@ -1,13 +1,8 @@
 package com.ryan.geom{
-	import fl.motion.MatrixTransformer;
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
-	import flash.events.MouseEvent;
-	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFieldAutoSize;
-	import flash.ui.Mouse;
 	
 	public class TrackPoint extends MovieClip {
 		

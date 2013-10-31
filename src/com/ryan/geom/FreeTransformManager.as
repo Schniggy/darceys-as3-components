@@ -576,13 +576,13 @@ package com.ryan.geom {
 		}
 		
 		protected function onROver(evt:MouseEvent):void {
-			//handlerContainer.visible = true;
+			handlerContainer.visible = true;
 			handlerContainer.alpha = 1;
 			transformContainer.alpha = 1;
 		}
 		
 		protected function onROut(evt:MouseEvent):void {
-			//handlerContainer.visible = false;
+			handlerContainer.visible = false;
 			handlerContainer.alpha = 0.5;
 			transformContainer.alpha = 0;
 		}
