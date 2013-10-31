@@ -164,39 +164,31 @@ package com.darcey.debug
 		public function warn(param:Object=null):void
 		{
 			var inputType:String = typeof param;
-			var msg:String = "\n######## WARNING ON APPLICATION: " + TtraceVO.applicationName + " ########" + "\n";
+			var msg:String = "#################################################################################\n######## WARNING ON APPLICATION: " + TtraceVO.applicationName + " ########" + "\n";
 			
 			switch (inputType)
 			{
 				// ------------------------------------------------------------
 				default:
 					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
 					break;
 				// ------------------------------------------------------------
 				
 				// ------------------------------------------------------------
 				case "xml":
 					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
 					break;
 				// ------------------------------------------------------------
 				
 				// ------------------------------------------------------------
 				case null:
 					msg += TtraceVO.applicationName + "TTrace got a NULL input";
-					addToDebugBox(msg);
-					trace(msg);
 					break;
 				// ------------------------------------------------------------
 				
 				// ------------------------------------------------------------
 				case "string":
 					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
 					break;
 				// ------------------------------------------------------------
 				
@@ -212,9 +204,6 @@ package com.darcey.debug
 						}
 						
 						msg += "------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						trace(msg);
 					} else {
 						msg += TtraceVO.applicationName + "Object:" + "\n";
 						
@@ -229,13 +218,16 @@ package com.darcey.debug
 						}
 						
 						msg += "-------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						trace(msg);
 					}
 					break;
 				// ------------------------------------------------------------
 			} // End switch
+			
+			
+			msg += "\n#################################################################################";
+			
+			addToDebugBox(msg);
+			trace(msg);
 		}
 		// ----------------------------------------------------------------------------------------
 		

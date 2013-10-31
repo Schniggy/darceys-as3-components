@@ -1,24 +1,13 @@
 /*
+Author: Darcey@AllForTheCode.co.uk
+version: 1.1
 Requires an XML input like so:
 
 <xml>
-
-<assets>
-<!-- Main SWF -->
-<asset name="plantapledge" type="swf" sizeInKB="1024" file="plantapledge.swf" />
-
-<!-- XML -->
-<asset name="config" type="xml" sizeInKB="2" file="assets/plantapledge/xml/config.xml" preventCaching="1" />
-<asset name="language" type="xml" sizeInKB="100" file="assets/plantapledge/xml/lang/en.xml" />
-
-<!-- IMAGES/TEXTURES -->
-<!-- <asset name="shadow" type="image" sizeInKB="18" file="assets/plantapledge/textures/shadow.png" />-->
-<asset name="earth" type="image" sizeInKB="428" file="assets/plantapledge/textures/earth.jpg" />
-<asset name="hitmap" type="image" sizeInKB="32" file="assets/plantapledge/textures/hit_map.png" />		
-
-
-</assets>
-
+<files>
+<file name="config" type="xml" ext="xml" path="assets/xml/config.xml" kb="2" cache="0" />
+<file name="row1col1" type="image" ext="jpg" path="assets/images/row1col1.jpg" kb="30" cache="1"/>
+</files>
 </xml>
 
 http://www.greensock.com/as/docs/tween/com/greensock/loading/LoaderMax.html
@@ -101,7 +90,7 @@ package com.darcey.io
 				onChildComplete:childCompleteHandler,
 				onComplete:completeHandler
 			} );
-						
+			
 			loader.autoDispose = autoDispose;
 			//loader.defaultContext = new LoaderContext(true,ApplicationDomain.currentDomain);
 			//loader.append( new SelfLoader(rootSWF) ); //just to include the root swf in the progress calculations
@@ -115,19 +104,28 @@ package com.darcey.io
 			var name:String = "";
 			var kb:Number = 0;
 			
-			for (var i:int = 0; i <= xml.assets.asset.length()-1; i++)
+			for (var i:int = 0; i <= xml.files.file.length()-1; i++)
 			{
-				cache = xml.assets.asset[i].attribute("preventCaching");
-				type = String(xml.assets.asset[i].attribute("type")).toLowerCase();
-				file = xml.assets.asset[i].attribute("file");
-				name = xml.assets.asset[i].attribute("name");
-				kb = Number(xml.assets.asset[i].attribute("sizeInKB"));
+				try {
+					cache = xml.files.file[i].attribute("cache");
+				} catch (e:Error) {
+					cache = "1";
+				}
 				
-				if (cache == "1"){
-					t.ttrace("XMLAssetListLoader.load(): Caching prevented for [" + file + "]");
+				try {
+					type = String(xml.files.file[i].attribute("type")).toLowerCase();
+				} catch (e:Error) {
+					type = "";
+				}
+				
+				file = xml.files.file[i].attribute("path");
+				name = xml.files.file[i].attribute("name");
+				kb = Number(xml.files.file[i].attribute("kb"));
+				
+				if (cache == "0"){
+					r = Math.round(Math.random() * 100000000000000);
 					appendToFileString = "?r="+r;
 				} else {
-					t.ttrace("XMLAssetListLoader.load(): Caching allowed for [" + file + "]");
 					appendToFileString = "";
 				}
 				
@@ -185,7 +183,8 @@ package com.darcey.io
 		private function progressHandler(e:LoaderEvent):Number
 		{
 			var index:int = loader.getChildIndex(e.target as LoaderCore);
-			percentLoaded = Math.round(e.target.progress * 100);
+			//percentLoaded = e.target.progress * 1000;
+			percentLoaded = Math.round(e.target.progress * 1000) / 10;
 			//t.ttrace("UTIL: e.target = " + e.target + " - progress = " + e.target.progress);
 			
 			dispatchEvent( new ProgressEvent(ProgressEvent.PROGRESS,false,false,e.target.bytesLoaded,e.target.bytesTotal) );
