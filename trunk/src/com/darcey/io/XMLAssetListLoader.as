@@ -16,7 +16,7 @@ http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/system/
 */
 package com.darcey.io
 {
-	// -------------------------------------------------------------------------------------------------------------------------------
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -----
 	import com.darcey.debug.Ttrace;
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.CSSLoader;
@@ -30,6 +30,7 @@ package com.darcey.io
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.loading.core.LoaderCore;
 	
+	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -39,14 +40,14 @@ package com.darcey.io
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 
-	// -------------------------------------------------------------------------------------------------------------------------------
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -----
 	
 	
 	
-	// -------------------------------------------------------------------------------------------------------------------------------
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -----
 	public class XMLAssetListLoader extends EventDispatcher
 	{
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private var t:Ttrace;
 		public var queName:String = "";
 		public var loader:LoaderMax;
@@ -57,9 +58,9 @@ package com.darcey.io
 		public function set complete(arg:Boolean):void { _complete = arg; }
 		
 		private var r:Number = Math.round(Math.random() * 100000000000000);
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function XMLAssetListLoader()
 		{
 			// Setup class specific tracer
@@ -69,12 +70,12 @@ package com.darcey.io
 			// Var ini
 			queName = "LoaderMaxQue" + r;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		// WARNING: forceBrowserReloader = true will force the browser to do a full load every time the page is loaded
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function load(xml:XML,auditSize:Boolean = true,requireWithRoot:Boolean = true,autoDispose:Boolean = false,showTrace:Boolean = false):void
 		{
 			if (showTrace){
@@ -176,10 +177,10 @@ package com.darcey.io
 			// Start the loader going
 			loader.load();
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function progressHandler(e:LoaderEvent):Number
 		{
 			var index:int = loader.getChildIndex(e.target as LoaderCore);
@@ -192,20 +193,20 @@ package com.darcey.io
 			
 			return percentLoaded;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function childCompleteHandler(e:LoaderEvent):void
 		{
 			var index:int = loader.getChildIndex(e.target as LoaderCore);
 			//trace(e.target.name + " finished, and it is in position " + index + " of the queue.");
 			//t.ttrace("Preloader().childCompleteHandler(): LOAD COMPLETE OF [" + e.target + "]");
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function errorHandler(e:LoaderEvent):void
 		{
 			t.wdiv();
@@ -213,21 +214,21 @@ package com.darcey.io
 			t.warn("XMLAssetListLoader.errorHandler(): If your on a windows server ensure f4v mime type is added.");
 			t.wdiv();
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function completeHandler(e:LoaderEvent):void
 		{
 			t.ttrace("XMLAssetListLoader.completeHandler(e)");
 			this.complete = true;
 			dispatchEvent( new Event(Event.COMPLETE) );
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getSWF(name:String):*
 		{
 			t.ttrace("XMLAssetListLoader.getSWF(name:"+name+")");
@@ -237,7 +238,7 @@ package com.darcey.io
 			var swf:* = swfLoader.rawContent as Object;
 			return swf;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getXML(name:String):XML
 		{
 			t.ttrace("XMLAssetListLoader.getXML(name:"+name+")");
@@ -245,7 +246,7 @@ package com.darcey.io
 			
 			return new XML(loader.getContent(name));
 		}		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getSWFLoader(name:String):*
 		{
 			t.ttrace("XMLAssetListLoader.getSWFLoader(name:"+name+")");
@@ -254,7 +255,7 @@ package com.darcey.io
 			var swfLoader:SWFLoader = loader.getLoader(name);
 			return swfLoader;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getContent(name:String):*
 		{
 			t.ttrace("XMLAssetListLoader.getContent(name:"+name+")");
@@ -262,7 +263,7 @@ package com.darcey.io
 			
 			return loader.getContent(name);
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getLoader(name:String):*
 		{
 			t.ttrace("XMLAssetListLoader.getLoader(name:"+name+")");
@@ -270,7 +271,7 @@ package com.darcey.io
 			
 			return loader.getLoader(name);
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getMovieClipFromRawContent(name:String):MovieClip
 		{
 			t.ttrace("XMLAssetListLoader.getMovieClipFromRawContent(name:"+name+")");
@@ -281,7 +282,7 @@ package com.darcey.io
 			
 			return mc;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getBitmapData(name:String):BitmapData
 		{
 			t.ttrace("XMLAssetListLoader.getBitmapData(name:"+name+")");
@@ -289,21 +290,32 @@ package com.darcey.io
 			
 			return loader.getLoader(name).rawContent.bitmapData;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function getBitmap(name:String,smoothing:Boolean=false,pixelSnapping:String="auto"):Bitmap
+		{
+			t.ttrace("XMLAssetListLoader.getBitmap(name:"+name+")");
+			if (!checkLoaded()){ return null; }
+			
+			
+			return new Bitmap(loader.getLoader(name).rawContent.bitmapData,pixelSnapping,smoothing);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function checkLoaded():Boolean
 		{
 			if (!complete){ trace("Load has not completed - returning null!"); }
 			return complete;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function dispose():void
 		{
 			try {
@@ -313,10 +325,10 @@ package com.darcey.io
 			loader = null;
 			complete = false;
 		}
-		// ---------------------------------------------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
 	}
-	// -------------------------------------------------------------------------------------------------------------------------------
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -----
 }

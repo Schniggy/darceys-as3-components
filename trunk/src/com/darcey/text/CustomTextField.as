@@ -68,7 +68,7 @@ package com.darcey.text
 			}
 			
 			
-			if (cVO.html == 1){
+			if (cVO.html){
 				this.htmlText = cVO.label;
 			} else {
 				this.text = cVO.label;
