@@ -14,6 +14,7 @@ package com.darcey.utils
 	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -44,6 +45,23 @@ package com.darcey.utils
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function outlineStage(stage:Stage):void
+		{
+			var outlineContainer:Sprite = new Sprite();
+			outlineContainer.name = "stage outline";
+			
+			outlineContainer.graphics.lineStyle(1,0xFFFFFF);
+			outlineContainer.graphics.moveTo(0,0);
+			outlineContainer.graphics.lineTo(stage.stageWidth-1,0);
+			outlineContainer.graphics.lineTo(stage.stageWidth-1,stage.stageHeight-1);
+			outlineContainer.graphics.lineTo(0,stage.stageHeight-1);
+			outlineContainer.graphics.lineTo(0,0);
+			stage.addChild(outlineContainer);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		

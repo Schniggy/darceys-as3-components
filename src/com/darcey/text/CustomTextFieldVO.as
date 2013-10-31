@@ -34,7 +34,7 @@ package com.darcey.text
 		
 		public var width:Number = -1;
 		public var height:Number = -1;
-		public var html:Number = 1;
+		public var html:Boolean = false;
 		public var verticalAlign:String = VerticalAlign.TOP;
 		// ---------------------------------------------------------------------------------------------------------------------------
 		
@@ -88,6 +88,7 @@ package com.darcey.text
 			if (getValue(parseInt(xmlData.@border))){ this.border = DTools.getBooleanFromNumber(parseInt(xmlData.@border)) }
 			if (getValue(parseInt(xmlData.@background))){ this.selectable = DTools.getBooleanFromNumber(parseInt(xmlData.@background)) }
 			if (getValue(parseInt(xmlData.@underline))){ this.underline = DTools.getBooleanFromNumber(parseInt(xmlData.@underline)) }
+			if (getValue(parseInt(xmlData.@html))){ this.html = DTools.getBooleanFromNumber(parseInt(xmlData.@html)) }
 			
 			
 			// Node label
