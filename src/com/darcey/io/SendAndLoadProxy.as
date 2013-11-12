@@ -38,7 +38,7 @@ package com.darcey.io
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public function SendAndLoadProxy(showTrace:Boolean=false)
+		public function SendAndLoadProxy(showTrace:Boolean=true)
 		{
 			// Setup class specific tracer
 			t = new Ttrace(showTrace);
@@ -51,7 +51,8 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function sendAndLoad(script:String,vars:Object,method:String="post",varFormat:String="variables"):void
 		{
-			t.ttrace("SendAndLoadProxy.sendAndLoad(script, vars, method:"+method+", varFormat:"+varFormat+")");
+			t.div();
+			t.ttrace("SendAndLoadProxy.sendAndLoad(script:"+script+", vars:"+vars+", method:"+method+", varFormat:"+varFormat+")");
 			
 			loader = new URLLoader;
 			urlreq = new URLRequest(script);
