@@ -13,7 +13,7 @@ package com.darcey.text
 	{
 		// -------------------------------------------------------------------------------------------
 		private var cVO:CustomTextFieldVO;
-		private var tf:TextFormat;
+		public var tf:TextFormat;
 		// -------------------------------------------------------------------------------------------
 		
 		
@@ -86,6 +86,34 @@ package com.darcey.text
 		// -------------------------------------------------------------------------------------------
 		
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function set label(arg:String):void
+		{
+			cVO.label = arg;
+			
+			if (cVO.html){
+				this.htmlText = cVO.label;
+			} else {
+				this.text = cVO.label;
+			}
+			this.defaultTextFormat = tf;
+			this.setTextFormat(tf);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function get label():String
+		{
+			if (cVO.html){
+				return this.htmlText;
+			} else {
+				return this.text;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		// -------------------------------------------------------------------------------------------
 		public function updateFromVO(customTextFieldVO:CustomTextFieldVO):void
 		{
@@ -96,6 +124,8 @@ package com.darcey.text
 		
 		
 		// -------------------------------------------------------------------------------------------
+		public function setFormat():void { applyFormat(); }
+		public function reApplyFormat():void { applyFormat(); }
 		public function applyFormat():void
 		{
 			this.defaultTextFormat = tf;

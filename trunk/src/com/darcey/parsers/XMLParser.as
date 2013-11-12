@@ -41,7 +41,7 @@ package com.darcey.parsers
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function getElementByIdUsingDynamicPath(xmlData:XML,path:String,id:String,dataType:String="string"):*
 		{
-			trace("XMLParser.getElementByIdUsingDynamicPath(xmlData, path:"+path+", id:+"+id+", dataType:"+dataType+")");
+			//trace("XMLParser.getElementByIdUsingDynamicPath(xmlData, path:"+path+", id:"+id+", dataType:"+dataType+")");
 			
 			//trace("getElementByIdUsingDynamicPath()");
 			// Loop find last xml path of xml content to search
@@ -67,7 +67,7 @@ package com.darcey.parsers
 			var xmlValue:*;
 			if (subXML[containerNode].(@id == id).length() > 0){
 				xmlValue = subXML[containerNode].(@id == id);
-				trace("######" + xmlValue)
+				//trace("######" + xmlValue)
 			} else {
 				msg = "";
 				msg += "#### ERROR > XMLParser";

@@ -3,7 +3,8 @@ package com.darcey.text
 	// ---------------------------------------------------------------------------------------------------------------------------
 	import com.darcey.utils.DTools;
 	
-	import flashx.textLayout.formats.VerticalAlign;
+	import flash.display.Sprite;
+
 	// ---------------------------------------------------------------------------------------------------------------------------
 	
 	// ---------------------------------------------------------------------------------------------------------------------------
@@ -16,15 +17,17 @@ package com.darcey.text
 		public var size:Number = 12;
 		public var color:Number = 0x000000;
 		public var autoSize:String = "left"; // none || left || right || center
-		public var align:String = "left"; // left || right || center
+		public var align:String = "left"; // left || right || center || justify
 		public var border:Boolean = false;
 		public var borderColor:Number = 0x000000;
-		public var leading:Number = 1;
+		public var leading:Number = 0;
 		public var bold:Boolean = false;
 		public var multiLine:Boolean = false;
 		public var wordWrap:Boolean = false;
 		public var selectable:Boolean = false;
 		public var underline:Boolean = false;
+		
+		public var overlayHitShape:Boolean = false;
 		
 		public var background:Boolean = false;
 		public var backgroundColor:Number = 0xFFFFFF;
@@ -35,7 +38,6 @@ package com.darcey.text
 		public var width:Number = -1;
 		public var height:Number = -1;
 		public var html:Boolean = false;
-		public var verticalAlign:String = VerticalAlign.TOP;
 		// ---------------------------------------------------------------------------------------------------------------------------
 		
 		
@@ -66,7 +68,7 @@ package com.darcey.text
 			if (getValue(String(xmlData.@font))){ this.font = xmlData.@font; }
 			if (getValue(String(xmlData.@autoSize))){ this.autoSize = xmlData.@autoSize; }
 			if (getValue(String(xmlData.@align))){ this.align = xmlData.@align; }
-			if (getValue(String(xmlData.@verticalAlign))){ this.verticalAlign = xmlData.@verticalAlign; }
+			//if (getValue(String(xmlData.@verticalAlign))){ this.verticalAlign = xmlData.@verticalAlign; }
 			
 			// Numbers
 			if (getValue(parseInt(xmlData.@color))){ this.color = parseInt(xmlData.@color); }
@@ -89,6 +91,7 @@ package com.darcey.text
 			if (getValue(parseInt(xmlData.@background))){ this.selectable = DTools.getBooleanFromNumber(parseInt(xmlData.@background)) }
 			if (getValue(parseInt(xmlData.@underline))){ this.underline = DTools.getBooleanFromNumber(parseInt(xmlData.@underline)) }
 			if (getValue(parseInt(xmlData.@html))){ this.html = DTools.getBooleanFromNumber(parseInt(xmlData.@html)) }
+			if (getValue(parseInt(xmlData.@html))){ this.overlayHitShape = DTools.getBooleanFromNumber(parseInt(xmlData.@overlayHitShape)) }
 			
 			
 			// Node label
