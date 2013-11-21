@@ -98,6 +98,8 @@ package com.darcey.debug
 		{
 			var temp:*;
 			
+			
+			//trace(typeof(caller[p1]));
 			switch(typeof(caller[p1]))
 			{
 				case "string":
@@ -113,17 +115,35 @@ package com.darcey.debug
 				
 				case "number":
 					type="number";
-					value = String( parseFloat( caller[p1] ) );
+					value = parseFloat( caller[p1] ).toFixed(2);
 					break;
 				
 				case "object":
 					type="object";
-					value = String(caller[p1][p2]);
+					try {
+						if (typeof(caller[p1][p2])=="number")
+						{
+							value = parseFloat( caller[p1][p2] ).toFixed(2);
+						} else {
+							value = String(caller[p1][p2]);
+						}
+					} catch (e:Error) {
+						value = "NA";
+					}
 					break;
 				
 				case "object Dictionary":
 					type="dictionary";
-					value = String(caller[p1][p2]);
+					try {
+						if (typeof(caller[p1][p2])=="number")
+						{
+							value = parseFloat( caller[p1][p2] ).toFixed(2);
+						} else {
+							value = String(caller[p1][p2]);
+						}
+					} catch (e:Error) {
+						value = "NA";
+					}
 					break;
 			}
 			
