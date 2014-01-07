@@ -16,6 +16,7 @@ package com.darcey.utils
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
+	import flash.display.StageDisplayState;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
@@ -33,6 +34,45 @@ package com.darcey.utils
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public class DTools
 	{
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function toggleFullScreen(s:Stage):void
+		{
+			try {
+			if (s.displayState == StageDisplayState.NORMAL) {
+				s.displayState=StageDisplayState.FULL_SCREEN;
+			} else {
+				s.displayState=StageDisplayState.NORMAL;
+			}
+			} catch (e:Error) {
+				trace("FULL SCREEN MODE NOT AVAILABLE!");
+			}
+		}
+		
+		public static function goFullScreen(s:Stage):void
+		{
+			try {
+				if (s.displayState == StageDisplayState.NORMAL) {
+					s.displayState=StageDisplayState.FULL_SCREEN;
+				}
+			} catch (e:Error) {
+				trace("FULL SCREEN MODE NOT AVAILABLE!");
+			}
+		}
+		
+		public static function goFullScreenInteractive(s:Stage):void
+		{
+			try {
+				if (s.displayState == StageDisplayState.NORMAL) {
+					s.displayState=StageDisplayState.FULL_SCREEN_INTERACTIVE;
+				}
+			} catch (e:Error) {
+				trace("FULL SCREEN INTERACTIVE MODE NOT AVAILABLE!");
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function getURL(url:String,newWindow:Boolean):void

@@ -30,7 +30,7 @@ package com.darcey.video
 		public var ns:NetStream;
 		public var video:Video;
 		
-		public var url:String = "";
+		public var src:String = "";
 		private var vw:Number = 640;
 		private var vh:Number = 480;
 		
@@ -45,16 +45,16 @@ package com.darcey.video
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public function CustomVideoPlayer(stageRef:Stage,url:String,videoW:Number=640,videoH:Number=480,autoPlay:Boolean=false,repeat:Boolean=true)
+		public function CustomVideoPlayer(stageRef:Stage,src:String,videoW:Number=640,videoH:Number=480,autoPlay:Boolean=false,repeat:Boolean=true)
 		{
 			// Setup class specific tracer
-			t = new Ttrace(false);
-			t.ttrace("CustomVideoPlayer(stageRef:"+stageRef+",url:"+url+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
+			t = new Ttrace(true);
+			t.ttrace("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
 			
 			
 			// Var ini
 			this.stageRef = stageRef;
-			this.url = url;
+			this.src = src;
 			vw = videoW;
 			vh = videoH;
 			this.autoPlay = autoPlay;
@@ -99,7 +99,7 @@ package com.darcey.video
 					connectStream();
 					break;
 				case "NetStream.Play.StreamNotFound":
-					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + url);
+					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
 					break;
 				case "NetStream.Play.Stop":
 					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Playback complete");
@@ -121,7 +121,7 @@ package com.darcey.video
 			ns.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 			ns.client = new CustomVideoPlayerClient();
 			video.attachNetStream(ns);
-			ns.play(url);
+			ns.play(src);
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -142,7 +142,8 @@ package com.darcey.video
 			
 			
 			if (ns){
-				ns.pause();
+				ns.resume();
+				//ns.pause();
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -173,6 +174,40 @@ package com.darcey.video
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		﻿// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function changeVideo(src:String):void
+		{
+			this.src = src;
+			
+			try {
+				ns.close();
+			} catch (e:Error) {}
+			
+			//new RemoveAllChildrenIn(this);
+			
+			//video = new Video(vw,vh);
+			//addChild(video);
+			
+			try {
+				nc.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+				nc.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
+			} catch (e:Error) {}
+			nc = null;
+			
+			try {
+				ns.removeEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
+			} catch (e:Error) {}
+			ns = null;
+						
+			init();
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
 		
 		
 		/*
