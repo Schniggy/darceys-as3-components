@@ -50,9 +50,11 @@ package com.bit101.components
 		// So if you are using the Flex 3.x sdk compiler, switch the embed statment below to expose the correct version.
 		
 		// Flex 4.x sdk:
-		[Embed(source="com/bit101/pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
+		// NOTE: Mobile dev may require full path to font
+		[Embed(source="G:/Software/Code/AS3/libs_svn/com/bit101/pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
+		//[Embed(source="com/bit101/pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
 		// Flex 3.x sdk:
-//		[Embed(source="/assets/pf_ronda_seven.ttf", fontName="PF Ronda Seven", mimeType="application/x-font")]
+		// [Embed(source="/assets/pf_ronda_seven.ttf", fontName="PF Ronda Seven", mimeType="application/x-font")]
 		protected var Ronda:Class;
 		
 		protected var _width:Number = 0;
