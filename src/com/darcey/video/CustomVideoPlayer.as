@@ -177,7 +177,7 @@ package com.darcey.video
 		
 		
 		
-		﻿// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function changeVideo(src:String):void
 		{
 			this.src = src;
