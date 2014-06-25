@@ -2,6 +2,7 @@ package com.darcey.video
 {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	import com.darcey.debug.Ttrace;
+	import com.darcey.events.CustomEvent;
 	import com.darcey.utils.RemoveAllChildrenIn;
 	
 	import flash.display.Sprite;
@@ -9,6 +10,7 @@ package com.darcey.video
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
+	import flash.media.SoundTransform;
 	import flash.media.Video;
 	import flash.net.NetConnection;
 	import flash.net.NetStream;
@@ -39,6 +41,8 @@ package com.darcey.video
 		
 		public var playbackTime:Number = 0;
 		public var duration:Number = 0;
+		
+		public var videoVolumeTransform:SoundTransform;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
@@ -120,7 +124,14 @@ package com.darcey.video
 			ns = new NetStream(nc);
 			ns.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
 			
+			videoVolumeTransform = new SoundTransform(1);
+			//ns.soundTransform = videoVolumeTransform;
+			//this.soundTransform = new SoundTransform(1);
+			ns.soundTransform = videoVolumeTransform;
+			
 			customClient = new CustomVideoPlayerClient();
+			//customClient.addEventListener("CuePoint",cuePointHandler);
+			
 			//customClient.onMetaData = onMetaData.onMetaData;
 			
 			ns.client = customClient;
@@ -128,6 +139,26 @@ package com.darcey.video
 			ns.play(src);
 			
 			
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function volume(n:Number):void
+		{
+			videoVolumeTransform.volume = n;
+			ns.soundTransform = videoVolumeTransform;
+			//this.soundTransform.volume = n;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		private function cuePointHandler(e:CustomEvent):void
+		{
+			t.ttrace("CustomVideoPlayer.cuePointHandler(e)");
+			
+			dispatchEvent( e );
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
